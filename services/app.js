@@ -4,6 +4,8 @@ var bodyParser = require('body-parser');
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
+var cors = require('cors');
+app.use(cors());
 
 // init sqlite db
 var fs = require('fs');
@@ -25,7 +27,8 @@ db.serialize(function(){
 // create endpoints
 app.get('/users', function(request, response) {
   db.all('SELECT * from users', function(err, rows) {
-    response.send(JSON.stringify(rows));
+    response.setHeader('Content-Type', 'application/json');
+    response.status(200).send(JSON.stringify(rows));
   });
 });
 
@@ -47,6 +50,6 @@ db.all('SELECT * from order_items', function(err, rows) {
     });
 });
 
-app.listen(6063, () => {
+app.listen(6064, () => {
     console.log("Server running on port 6063");
    });
