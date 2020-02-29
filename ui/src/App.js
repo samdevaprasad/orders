@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { retrieveAllUsers } from './actions/userActions';
+import { Footer } from './components/footer/Footer';
+import { Header } from './components/header/Header';
 
 class App extends Component {
 
@@ -10,7 +12,10 @@ class App extends Component {
 
   render() {
     return (
-      <div>Hello World Sam</div>
+      <div>
+        <Header />
+        <Footer />
+      </div>
     );
   }
 }
