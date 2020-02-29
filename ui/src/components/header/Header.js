@@ -15,7 +15,7 @@ export class Header extends Component {
     return (
         <MDBNavbar color="blue" dark expand="md">
         <MDBNavbarBrand>
-            <strong className="white-text">Walmart InHome Delivery Solutions</strong>
+            <strong className="white-text">Walmart InHome Solutions</strong>
         </MDBNavbarBrand>
         <MDBNavbarToggler onClick={this.toggleCollapse} />
         <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
@@ -29,10 +29,10 @@ export class Header extends Component {
                     <MDBIcon icon="user" />
                 </MDBDropdownToggle>
                 <MDBDropdownMenu className="dropdown-default" right>
-                    <MDBDropdownItem href="https://venmo.com/sammydollabills">Notifications</MDBDropdownItem>
-                    <MDBDropdownItem href="https://venmo.com/sammydollabills">History</MDBDropdownItem>
-                    <MDBDropdownItem href="https://venmo.com/sammydollabills">Settings</MDBDropdownItem>
-                    <MDBDropdownItem href="https://venmo.com/sammydollabills">Logout</MDBDropdownItem>
+                    <MDBDropdownItem href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Notifications</MDBDropdownItem>
+                    <MDBDropdownItem href="https://www.youtube.com/watch?v=oHg5SJYRHA0">History</MDBDropdownItem>
+                    <MDBDropdownItem href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Settings</MDBDropdownItem>
+                    <MDBDropdownItem href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Logout</MDBDropdownItem>
                 </MDBDropdownMenu>
                 </MDBDropdown>
             </MDBNavItem>

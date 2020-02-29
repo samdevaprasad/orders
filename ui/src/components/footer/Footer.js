@@ -48,9 +48,6 @@ export const Footer = () => {
               <li className="list-unstyled">
                 <a href="https://www.youtube.com/watch?v=oHg5SJYRHA0">walmart.com</a>
               </li>
-              <li className="list-unstyled">
-                <a href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Instagram</a>
-              </li>
             </ul>
           </MDBCol>
           <MDBCol md="3">
@@ -88,6 +85,9 @@ export const Footer = () => {
               </li>
               <li className="list-unstyled">
                 <a href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Youtube</a>
+              </li>
+              <li className="list-unstyled">
+                <a href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Instagram</a>
               </li>
               <li className="list-unstyled">
                 <a href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Facebook</a>
