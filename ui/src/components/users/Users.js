@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { MDBTable, MDBTableBody, MDBTableHead, MDBBtn, MDBCard, 
-  MDBCardBody, MDBInput, MDBCardText, MDBCol  } from 'mdbreact';
-  import { deleteUser, retrieveAllUsers, uploadUser } from './../../actions/userActions';
+import { MDBTable, MDBTableBody, MDBTableHead, MDBBtn, MDBCard, MDBCardBody, MDBInput, MDBCardText, MDBCol } from 'mdbreact';
+import { deleteUser, retrieveAllUsers, uploadUser } from './../../actions/userActions';
 import styles from './Users.module.css';
 
+// component contains the ability to view, upload and delete Walmart InHome users
 class UsersComponent extends Component {
-
   constructor(props){
     super(props);
     this.state = {
@@ -16,52 +15,20 @@ class UsersComponent extends Component {
     }
   }
 
-  componentWillMount(){
-    this.props.actions.retrieveAllUsers();
-  }
-
   componentDidUpdate(prevProps) {
+    // if we recieve a different upload message from the server make sure to retrieve latest list of users
     if (this.props.uploadMessage !== prevProps.uploadMessage) {
       this.props.actions.retrieveAllUsers();
       this.setState({ uploadMessageText: this.props.uploadMessage });
     }
   }
+
+  componentWillMount(){
+    // initial retrieve of users right before component mounts
+    this.props.actions.retrieveAllUsers();
+  }
   
-  createUsersTable = () => {
-
-    const { users } = this.props;
-    const usersList = [];
-    users.sort((a, b) => {
-      return a.name > b.name ? 1 : -1;
-    })
-    users.map(user => {
-      usersList.push(<tr key={`${user.id}`}>
-        <td className={styles.userTableRow}>{user.name}</td>
-      </tr>);
-    });
-
-    return (
-      <MDBTable>
-        <MDBTableHead>
-          <tr>
-            <th className={styles.userTableHeader}>Name (Sorted Alphabetically)</th>
-          </tr>
-        </MDBTableHead>
-        <MDBTableBody>
-          {usersList}
-        </MDBTableBody>
-      </MDBTable>
-    );
-  }
-
-  uploadUser = () => {
-    this.props.actions.uploadUser(this.state.inputUserValue);
-  }
-
-  deleteUser = () => {
-    this.props.actions.deleteUser(this.state.inputUserValue);
-  }
-
+  // function that creates the html template for the upload user card
   createUploadCard = () => {
     return (
       <MDBCol>
@@ -78,6 +45,44 @@ class UsersComponent extends Component {
     )
   }
 
+  // function that creates the user results table
+  createUsersTable = () => {
+    const { users } = this.props;
+    const usersList = [];
+    // sort users alphabetically desc order
+    users.sort((a, b) => {
+      return a.name > b.name ? 1 : -1;
+    })
+    users.map(user => {
+      usersList.push(<tr key={`${user.id}`}>
+        <td className={styles.userTableRow}>{user.name}</td>
+      </tr>);
+    });
+    return (
+      <MDBTable>
+        <MDBTableHead>
+          <tr>
+            <th className={styles.userTableHeader}>Names (Sorted Alphabetically)</th>
+          </tr>
+        </MDBTableHead>
+        <MDBTableBody>
+          {usersList}
+        </MDBTableBody>
+      </MDBTable>
+    );
+  }
+
+  // api call to delete user from db
+  deleteUser = () => {
+    this.props.actions.deleteUser(this.state.inputUserValue);
+  }
+
+  // api call to upload user to db
+  uploadUser = () => {
+    this.props.actions.uploadUser(this.state.inputUserValue);
+  }
+
+  // set the state of the value in the user upload textbox
   updateUserValue = evt => {
     this.setState({ inputUserValue: evt.target.value, uploadMessageText: '' });
   }
