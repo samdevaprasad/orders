@@ -3,43 +3,42 @@ import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavbarToggler, 
 MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon } from "mdbreact";
 
 export class Header extends Component {
-    state = {
+  state = {
     isOpen: false
-    };
+  };
 
-    toggleCollapse = () => {
+  toggleCollapse = () => {
     this.setState({ isOpen: !this.state.isOpen });
-    }
+  }
 
-    render() {
+  render() {
     return (
-        <MDBNavbar color="blue" dark expand="md">
+      <MDBNavbar color="blue" dark expand="md">
         <MDBNavbarBrand>
             <strong className="white-text">Walmart InHome Solutions</strong>
         </MDBNavbarBrand>
         
         <MDBNavbarToggler onClick={this.toggleCollapse} />
-        <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
-            <MDBNavbarNav left>
-            </MDBNavbarNav>
-            <MDBNavbarNav right>
 
+        <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
+          <MDBNavbarNav left />
+          <MDBNavbarNav right>
             <MDBNavItem>
-                <MDBDropdown>
+              <MDBDropdown>
                 <MDBDropdownToggle nav caret>
-                    <MDBIcon icon="user" />
+                  <MDBIcon icon="user" />
                 </MDBDropdownToggle>
                 <MDBDropdownMenu className="dropdown-default" right>
-                    <MDBDropdownItem href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Notifications</MDBDropdownItem>
-                    <MDBDropdownItem href="https://www.youtube.com/watch?v=oHg5SJYRHA0">History</MDBDropdownItem>
-                    <MDBDropdownItem href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Settings</MDBDropdownItem>
-                    <MDBDropdownItem href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Logout</MDBDropdownItem>
+                  <MDBDropdownItem href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Notifications</MDBDropdownItem>
+                  <MDBDropdownItem href="https://www.youtube.com/watch?v=oHg5SJYRHA0">History</MDBDropdownItem>
+                  <MDBDropdownItem href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Settings</MDBDropdownItem>
+                  <MDBDropdownItem href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Logout</MDBDropdownItem>
                 </MDBDropdownMenu>
-                </MDBDropdown>
+              </MDBDropdown>
             </MDBNavItem>
-            </MDBNavbarNav>
+          </MDBNavbarNav>
         </MDBCollapse>
-        </MDBNavbar>
-        );
-    }
+      </MDBNavbar>
+    );
+  }
 }

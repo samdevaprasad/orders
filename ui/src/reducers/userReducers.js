@@ -1,22 +1,22 @@
 const initialState = {
-    users: [],
-    uploadMessage: ''
+  users: [],
+  uploadMessage: ''
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case `REQUEST`:
-        return {
-            ...state
-        };
+      return {
+        ...state
+      };
     case `FAILURE`:
-        return {
-            ...state
-        };
+      return {
+        ...state
+      };
     case `SUCCESS`:
       return {
-          ...state,
-          users: action.payload
+        ...state,
+        users: action.payload
       };
     case `REQUEST_P`:
       return {
@@ -32,9 +32,9 @@ export default (state = initialState, action) => {
       };
     case `SUCCESS_P`:
       return {
-          ...state,
-          isUploadingUser: false,
-          uploadMessage: action.payload.message
+        ...state,
+        isUploadingUser: false,
+        uploadMessage: action.payload.message
       };
     default:
       return state;

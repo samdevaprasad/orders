@@ -1,6 +1,7 @@
 import React from "react";
 import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 
+// footer for walmart inhome solution website.  not connected to redux store.
 export const Footer = () => {
   return (
     <MDBFooter color="grey" className="font-small pt-4 mt-4">
