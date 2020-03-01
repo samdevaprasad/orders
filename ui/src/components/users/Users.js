@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MDBTable, MDBTableBody, MDBTableHead, MDBBtn, MDBCard, 
   MDBCardBody, MDBInput, MDBCardText, MDBCol  } from 'mdbreact';
-  import { deleteUser, retrieveAllUsers, uploadNewUser } from './../../actions/userActions';
+  import { deleteUser, retrieveAllUsers, uploadUser } from './../../actions/userActions';
 import styles from './Users.module.css';
 
 class UsersComponent extends Component {
@@ -31,9 +31,11 @@ class UsersComponent extends Component {
 
     const { users } = this.props;
     const usersList = [];
+    users.sort((a, b) => {
+      return a.name > b.name ? 1 : -1;
+    })
     users.map(user => {
       usersList.push(<tr key={`${user.id}`}>
-        <td className={styles.userTableRow}>{user.id}</td>
         <td className={styles.userTableRow}>{user.name}</td>
       </tr>);
     });
@@ -42,8 +44,7 @@ class UsersComponent extends Component {
       <MDBTable>
         <MDBTableHead>
           <tr>
-            <th className={styles.userTableHeader}>#</th>
-            <th className={styles.userTableHeader}>Name</th>
+            <th className={styles.userTableHeader}>Name (Sorted Alphabetically)</th>
           </tr>
         </MDBTableHead>
         <MDBTableBody>
@@ -54,7 +55,7 @@ class UsersComponent extends Component {
   }
 
   uploadUser = () => {
-    this.props.actions.uploadNewUser(this.state.inputUserValue);
+    this.props.actions.uploadUser(this.state.inputUserValue);
   }
 
   deleteUser = () => {
@@ -103,7 +104,7 @@ const mapDispatchToProps = dispatch => {
     actions: {
       deleteUser: bindActionCreators(deleteUser, dispatch),
       retrieveAllUsers: bindActionCreators(retrieveAllUsers, dispatch),
-      uploadNewUser: bindActionCreators(uploadNewUser, dispatch)
+      uploadUser: bindActionCreators(uploadUser, dispatch)
     }
   }
 };

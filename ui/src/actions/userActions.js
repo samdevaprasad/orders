@@ -10,12 +10,12 @@ export const retrieveAllUsers = () => {
     }
 }
 
-export const uploadNewUser = name => {
+export const uploadUser = name => {
     return createAction({
         headers: {
             'Content-Type': 'application/json'
         },
-        endpoint: `http://localhost:6064/new-user?name=${name}`,
+        endpoint: `http://localhost:6064/upload-user?name=${name}`,
         method: 'POST',
         types: [`REQUEST_P`, `SUCCESS_P`, `FAILURE_P`]
       });

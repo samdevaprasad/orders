@@ -50,7 +50,7 @@ db.all('SELECT * from order_items', function(err, rows) {
     });
 });
 
-app.post('/new-user', function(request, response) {
+app.post('/upload-user', function(request, response) {
   response.setHeader('Content-Type', 'application/json');
   const payloadResponse = {
     message: ''
