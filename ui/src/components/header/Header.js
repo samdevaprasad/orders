@@ -17,6 +17,7 @@ export class Header extends Component {
         <MDBNavbarBrand>
             <strong className="white-text">Walmart InHome Solutions</strong>
         </MDBNavbarBrand>
+        
         <MDBNavbarToggler onClick={this.toggleCollapse} />
         <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
             <MDBNavbarNav left>

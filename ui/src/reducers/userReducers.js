@@ -1,5 +1,6 @@
 const initialState = {
-    users: []
+    users: [],
+    uploadMessage: ''
 };
 
 export default (state = initialState, action) => {
@@ -16,6 +17,24 @@ export default (state = initialState, action) => {
       return {
           ...state,
           users: action.payload
+      };
+    case `REQUEST_P`:
+      return {
+        ...state,
+        isUploadingUser: true,
+        uploadMessage: ''
+      };
+    case `FAILURE_P`:
+      return {
+        ...state,
+        isUploadingUser: false,
+        uploadMessage: action.payload.message
+      };
+    case `SUCCESS_P`:
+      return {
+          ...state,
+          isUploadingUser: false,
+          uploadMessage: action.payload.message
       };
     default:
       return state;
