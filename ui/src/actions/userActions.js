@@ -1,9 +1,10 @@
 import { RSAA, createAction } from 'redux-api-middleware';
+import { localHost } from '../constants';
 
 export const retrieveAllUsers = () => {
   return {
     [RSAA]: {
-      endpoint: `http://localhost:6064/users`,
+      endpoint: `${localHost}/users`,
       method: 'GET',
       types: [`REQUEST`, `SUCCESS`, `FAILURE`]
     }
@@ -15,7 +16,7 @@ export const uploadUser = name => {
     headers: {
         'Content-Type': 'application/json'
     },
-    endpoint: `http://localhost:6064/upload-user?name=${name}`,
+    endpoint: `${localHost}/upload-user?name=${name}`,
     method: 'POST',
     types: [`REQUEST_P`, `SUCCESS_P`, `FAILURE_P`]
   });
@@ -27,7 +28,7 @@ export const deleteUser = name => {
     headers: {
         'Content-Type': 'application/json'
     },
-    endpoint: `http://localhost:6064/delete-user?name=${name}`,
+    endpoint: `${localHost}/delete-user?name=${name}`,
     method: 'POST',
     types: [`REQUEST_P`, `SUCCESS_P`, `FAILURE_P`]
   });

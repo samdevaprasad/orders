@@ -88,8 +88,73 @@ app.post('/delete-user', function(request, response) {
 // create endpoints related to items
 app.get('/items', function(request, response) {
   db.all('SELECT * from items', function(err, rows) {
-    response.send(JSON.stringify(rows));
+    response.setHeader('Content-Type', 'application/json');
+    response.status(200).send(JSON.stringify(rows));
   });
+});
+
+app.post('/upload-item', function(request, response) {
+  response.setHeader('Content-Type', 'application/json');
+  const payloadResponse = {
+    message: ''
+  };
+  // check if UI has passed back name
+  if (request && request.query && request.query.name){
+    const sqlStatementForFindingPerson = `SELECT * from items WHERE name = '${request.query.name}'`;
+
+    db.all(sqlStatementForFindingPerson, (err, rows) => {
+      if (err){
+        response.status(500).send(JSON.stringify(payloadResponse));
+      } else if (rows && rows.length === 0){
+        const sqlInsertStatement = `INSERT INTO items (name) VALUES ('${request.query.name}')`;
+        db.all(sqlInsertStatement, function(err, rows) {
+          if(err){
+            response.status(500).send(JSON.stringify(payloadResponse));
+          }
+          payloadResponse.message ='item uploaded successfully!';
+          response.status(200).send(JSON.stringify(payloadResponse));
+        });
+      } else {
+        payloadResponse.message = 'item already exists in database';
+        response.status(200).send(JSON.stringify(payloadResponse));
+      }
+    });
+  }
+  else {
+    response.status(500).send();
+  }
+});
+
+app.post('/delete-item', function(request, response) {
+  response.setHeader('Content-Type', 'application/json');
+  const payloadResponse = {
+    message: ''
+  };
+  // check if UI has passed back name
+  if (request && request.query && request.query.name){
+    const sqlStatementForFindingPerson = `SELECT * from items WHERE name = '${request.query.name}'`;
+
+    db.all(sqlStatementForFindingPerson, (err, rows) => {
+      if (err){
+        response.status(500).send(JSON.stringify(payloadResponse));
+      } else if (rows && rows.length > 0){
+        const sqlDeleteStatement = `DELETE from items WHERE name = '${request.query.name}'`;
+        db.all(sqlDeleteStatement, function(err, rows) {
+          if(err){
+            response.status(500).send(JSON.stringify(payloadResponse));
+          }
+          payloadResponse.message = 'item deleted!';
+          response.status(200).send(JSON.stringify(payloadResponse));
+        });
+      } else {
+        payloadResponse.message = 'no item found to delete';
+        response.status(200).send(JSON.stringify(payloadResponse));
+      }
+    });
+  }
+  else {
+    response.status(500).send();
+  }
 });
 
 // create endpoints related to orders
@@ -107,6 +172,6 @@ app.get('/order_items', function(request, response) {
 });
 
 // listen app on port 6064
-app.listen(6064, () => {
-  console.log("Server running on port 6064");
+app.listen(6066, () => {
+  console.log("Server running on port 6066");
 });

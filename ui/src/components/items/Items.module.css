@@ -12,18 +12,18 @@
     margin-left: 100px !important;
 }
 
-.usersContainer {
+.itemsContainer {
   padding-bottom: 25px;
   margin-bottom: 25px;
   border-bottom: 4px solid black;
 }
 
-.userTableHeader {
+.itemTableHeader {
     padding-top: 0px !important;
     padding-bottom: 10px !important;
 }
 
-.userTableRow {
+.itemTableRow {
     padding-top: 5px !important;
     padding-bottom: 5px !important;
 }

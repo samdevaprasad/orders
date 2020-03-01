@@ -89,7 +89,7 @@ class UsersComponent extends Component {
 
   render(){
     return (
-      <div>
+      <div className={styles.usersContainer}>
         <div className={styles.row}>
           <div className={styles.cardContainer}>{this.createUploadCard()}</div>
           <div>{this.createUsersTable()}</div>
