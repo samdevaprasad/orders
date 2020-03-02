@@ -2,15 +2,15 @@ To get started open up two seperate command prompts. I use Cmder since it's stra
 
 In the first command prompt run:
 
-cd services
-npm i
-node app.js
+- cd services
+- npm i
+- node app.js
 
 In the second command prompt run:
 
-cd ui
-npm i
-npm start
+- cd ui
+- npm i
+- npm start
 
 The UI should be viewable at http://localhost:3000/  (In case you are not able to bring up demo, I also have a video demo uploaded to this repo for your viewing)
 
