@@ -26,6 +26,8 @@ Technical Enhancements
 - add and use typescript everywhere
 - make db transactional for orders upload.  could potentially upload to orders table and fail at upload to order_items table
 - host the ui on my github pages and then find some free hosting service for my service, so that you don't have to start up project locally
+- add more branches than just master
+- use webpack instead of create-react-app
 
 Functional Improvements
 - check with users on usability if they like all uploads/views on one screen
