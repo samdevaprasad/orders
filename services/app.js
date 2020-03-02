@@ -159,19 +159,43 @@ app.post('/delete-item', function(request, response) {
 
 // create endpoints related to orders
 app.get('/orders', function(request, response) {
+  db.all('SELECT o1.id, o1.user_id, o2.item_id from orders o1, orders_items o2 WHERE o1.id = 02.order_id', function(err, rows) {
+    response.setHeader('Content-Type', 'application/json');
+    response.status(200).send(JSON.stringify(rows));
+  });
+});
+
+app.get('/orderstbl', function(request, response) {
   db.all('SELECT * from orders', function(err, rows) {
-    response.send(JSON.stringify(rows));
+    response.setHeader('Content-Type', 'application/json');
+    response.status(200).send(JSON.stringify(rows));
   });
 });
 
-// create endpoints related to order items
-app.get('/order_items', function(request, response) {
-  db.all('SELECT * from order_items', function(err, rows) {
-    response.send(JSON.stringify(rows));
+app.get('/ordersitemstbl', function(request, response) {
+  db.all('SELECT * from orders_items', function(err, rows) {
+    response.setHeader('Content-Type', 'application/json');
+    response.status(200).send(JSON.stringify(rows));
   });
 });
 
-// listen app on port 6064
-app.listen(6066, () => {
-  console.log("Server running on port 6066");
+app.post('/upload-order', function(request, response) {
+  db.all('INSERT INTO orders (user_id) VALUES (4)', function(err, rows) {
+
+  });
+  db.all('INSERT INTO order_items (order_id, item_id) VALUES (1,7)', function(err, rows) {
+    if(err){
+      response.setHeader('Content-Type', 'application/json');
+      response.status(500).send();
+    } else {
+      response.setHeader('Content-Type', 'application/json');
+      response.status(200).send();
+    }
+  });
+ 
+});
+
+// listen app on port 6069
+app.listen(6069, () => {
+  console.log("Server running on port 6069");
 });

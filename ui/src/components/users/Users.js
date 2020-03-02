@@ -37,7 +37,7 @@ class UsersComponent extends Component {
             <MDBCardText>Upload or delete a user</MDBCardText>
             <MDBInput label="Enter name here" value={this.state.inputUserValue} onChange={this.updateUserValue}/>
             <MDBBtn color='primary' className={styles.uploadBtn} onClick={this.uploadUser}>Upload</MDBBtn>
-            <MDBBtn color='danger' className={styles.uploadBtn} onClick={this.deleteUser} href="#">Delete</MDBBtn>
+            <MDBBtn color='danger' className={styles.uploadBtn} onClick={this.deleteUser}>Delete</MDBBtn>
             {this.state.uploadMessageText}
           </MDBCardBody>
         </MDBCard>

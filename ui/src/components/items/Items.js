@@ -37,7 +37,7 @@ class ItemsComponent extends Component {
             <MDBCardText>Upload or delete an item</MDBCardText>
             <MDBInput label="Enter item name here" value={this.state.inputItemValue} onChange={this.updateItemValue}/>
             <MDBBtn color='primary' className={styles.uploadBtn} onClick={this.uploadItem}>Upload</MDBBtn>
-            <MDBBtn color='danger' className={styles.uploadBtn} onClick={this.deleteItem} href="#">Delete</MDBBtn>
+            <MDBBtn color='danger' className={styles.uploadBtn} onClick={this.deleteItem}>Delete</MDBBtn>
             {this.state.uploadMessageText}
           </MDBCardBody>
         </MDBCard>
