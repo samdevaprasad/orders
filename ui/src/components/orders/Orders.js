@@ -17,10 +17,6 @@ class OrdersComponent extends Component {
     }
   }
 
-  clearUploadMessage() {
-    this.setState({ uploadMessageText: '' });
-  }
-
   componentDidUpdate(prevProps) {
     // if we recieve a different upload message from the server make sure to retrieve latest list of orders
     if (this.props.uploadMessage !== prevProps.uploadMessage) {
@@ -35,6 +31,10 @@ class OrdersComponent extends Component {
     this.props.actions.retrieveOrders();
   }
 
+  clearUploadMessage() {
+    this.setState({ uploadMessageText: '' });
+  }
+
   createDropDownOptions = options => {
     const optionsList = [];
     options.map(option => {
@@ -42,7 +42,6 @@ class OrdersComponent extends Component {
     });
     return optionsList;
   }
-
 
   createOrdersTable = () => {
     const { orders } = this.props;
@@ -95,12 +94,6 @@ class OrdersComponent extends Component {
     )
   }
 
-  uploadUser = () => {
-    if (this.state.userSelected !== 0 && this.state.itemSelected !== 0){
-      this.props.actions.uploadOrder(this.state.itemSelected, this.state.userSelected);
-    }
-  }
-
   updateSelectedItem = evt => {
     this.setState({ itemSelected: evt.target.value });
   }
@@ -109,6 +102,12 @@ class OrdersComponent extends Component {
     this.setState({ userSelected: evt.target.value });
   }
 
+  uploadUser = () => {
+    if (this.state.userSelected !== 0 && this.state.itemSelected !== 0){
+      this.props.actions.uploadOrder(this.state.itemSelected, this.state.userSelected);
+    }
+  }
+  
   render(){
     return (
       <div>
