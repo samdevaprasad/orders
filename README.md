@@ -1,5 +1,3 @@
-Please visit the README.md files in the services and ui modules to find more details on each module.
-
 To get started open up two seperate command prompts. I use Cmder since it's straight forward to use and I can specific the PATH and other variables pretty easily on start up in the user-startup.cmd file.
 
 In the first command prompt run:
