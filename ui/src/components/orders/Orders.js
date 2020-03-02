@@ -26,6 +26,7 @@ class OrdersComponent extends Component {
     if (this.props.uploadMessage !== prevProps.uploadMessage) {
       this.props.actions.retrieveOrders();
       this.setState({ uploadMessageText: this.props.uploadMessage });
+      // removes the success or error message after 5 seconds.  future could come up with a better solution.
       setTimeout(() => { this.clearUploadMessage() }, 5000);
     }
   }
