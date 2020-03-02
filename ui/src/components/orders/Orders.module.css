@@ -8,8 +8,8 @@
   justify-content: flex-start;
 }
 
-.upload-btn {
-  margin-left: 100px !important;
+.orderSelectDropDown {
+  padding-bottom: 10px;
 }
 
 .orderTableHeader {
@@ -20,4 +20,8 @@
 .orderTableRow {
   padding-top: 5px !important;
   padding-bottom: 5px !important;
+}
+
+.upload-btn {
+  margin-left: 100px !important;
 }
