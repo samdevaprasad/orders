@@ -159,7 +159,7 @@ app.post('/delete-item', function(request, response) {
 
 // create endpoints related to orders
 app.get('/orders', function(request, response) {
-  db.all('SELECT o1.id, o1.user_id, o2.item_id from orders o1, orders_items o2 WHERE o1.id = 02.order_id', function(err, rows) {
+  db.all('SELECT o1.order_id, o1.item_id, o2.id, o2.user_id, i1.name as item_name, u1.name as user_name from order_items o1, orders o2, items i1, users u1 where o1.order_id = o2.id and o1.item_id=i1.id and o2.user_id=u1.id', function(err, rows) {
     response.setHeader('Content-Type', 'application/json');
     response.status(200).send(JSON.stringify(rows));
   });
@@ -172,27 +172,33 @@ app.get('/orderstbl', function(request, response) {
   });
 });
 
-app.get('/ordersitemstbl', function(request, response) {
-  db.all('SELECT * from orders_items', function(err, rows) {
+app.get('/orderitemstbl', function(request, response) {
+  db.all('SELECT * from order_items', function(err, rows) {
     response.setHeader('Content-Type', 'application/json');
     response.status(200).send(JSON.stringify(rows));
   });
 });
 
 app.post('/upload-order', function(request, response) {
-  db.all('INSERT INTO orders (user_id) VALUES (4)', function(err, rows) {
-
-  });
-  db.all('INSERT INTO order_items (order_id, item_id) VALUES (1,7)', function(err, rows) {
-    if(err){
-      response.setHeader('Content-Type', 'application/json');
+  db.all(`INSERT INTO orders (user_id) VALUES (${request.query.userId})`, function(err, rows) {
+    response.setHeader('Content-Type', 'application/json');
+    if (err){
       response.status(500).send();
-    } else {
-      response.setHeader('Content-Type', 'application/json');
-      response.status(200).send();
     }
+    let order_id = 0;
+    db.all('SELECT * from orders', function(err, rows) {
+      if (err){
+        response.status(500).send();
+      }
+      order_id = rows.length;
+      db.all(`INSERT INTO order_items (order_id, item_id) VALUES (${order_id}, ${request.query.itemId})`, function(err, rows) {
+        if (err){
+          response.status(500).send();
+        }
+        response.status(200).send();
+      });
+    });
   });
- 
 });
 
 // listen app on port 6069

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { MDBBtn, MDBCard, MDBCardBody, MDBInput, MDBCardText, MDBCol } from 'mdbreact';
+import { bindActionCreators } from 'redux';
+import { MDBBtn, MDBCard, MDBCardBody, MDBCardText, MDBCol } from 'mdbreact';
 
+import { uploadOrder } from './../../actions/orderActions';
 import styles from './Orders.module.css';
 
 // component contains the ability to view, upload and delete Walmart InHome orders
@@ -51,7 +53,9 @@ class OrdersComponent extends Component {
   }
 
   uploadUser = () => {
-    
+    if (this.state.userSelected !== 0 && this.state.itemSelected !== 0){
+      this.props.actions.uploadOrder(this.state.itemSelected, this.state.userSelected);
+    }
   }
 
   updateSelectedItem = evt => {
@@ -61,8 +65,6 @@ class OrdersComponent extends Component {
   updateSelectedUser = evt => {
     this.setState({ userSelected: evt.target.value });
   }
-
-
 
   render(){
     return (
@@ -80,5 +82,12 @@ const mapStateToProps = state => ({
   items: state.itemReducers.items
 });
 
+const mapDispatchToProps = dispatch => {
+  return {
+    actions: {
+      uploadOrder: bindActionCreators(uploadOrder, dispatch)
+    }
+  }
+};
 
-export const Orders = connect(mapStateToProps, null)(OrdersComponent);
+export const Orders = connect(mapStateToProps, mapDispatchToProps)(OrdersComponent);
