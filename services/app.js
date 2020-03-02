@@ -33,7 +33,7 @@ app.post('/upload-user', function(request, response) {
     db.all(sqlStatementForFindingPerson, (err, rows) => {
       if (err){
         response.status(500).send(JSON.stringify(payloadResponse));
-      } else if (rows && rows.length === 0){
+      } else if (rows && rows.length === 0){ //if user is not found in users table, upload user
         const sqlInsertStatement = `INSERT INTO users (name) VALUES ('${request.query.name}')`;
         db.all(sqlInsertStatement, function(err, rows) {
           if(err){
@@ -42,7 +42,7 @@ app.post('/upload-user', function(request, response) {
           payloadResponse.message = 'user uploaded successfully!';
           response.status(200).send(JSON.stringify(payloadResponse));
         });
-      } else {
+      } else { // if user is found don't upload user
         payloadResponse.message = 'user already exists in database';
         response.status(200).send(JSON.stringify(payloadResponse));
       }
@@ -65,7 +65,7 @@ app.post('/delete-user', function(request, response) {
     db.all(sqlStatementForFindingPerson, (err, rows) => {
       if (err){
         response.status(500).send(JSON.stringify(payloadResponse));
-      } else if (rows && rows.length > 0){
+      } else if (rows && rows.length > 0){ // if user is present, delete user
         const sqlDeleteStatement = `DELETE from users WHERE name = '${request.query.name}'`;
         db.all(sqlDeleteStatement, function(err, rows) {
           if(err){
@@ -74,7 +74,7 @@ app.post('/delete-user', function(request, response) {
           payloadResponse.message = 'user deleted!';
           response.status(200).send(JSON.stringify(payloadResponse));
         });
-      } else {
+      } else { // if user is not present in users, don't delete user
         payloadResponse.message = 'no user found to delete';
         response.status(200).send(JSON.stringify(payloadResponse));
       }
@@ -183,17 +183,20 @@ app.post('/upload-order', function(request, response) {
   const payloadResponse = {
     message: ''
   };
+  // first insert into orders table with user id
   db.all(`INSERT INTO orders (user_id) VALUES (${request.query.userId})`, function(err, rows) {
     response.setHeader('Content-Type', 'application/json');
     if (err){
       response.status(500).send(JSON.stringify(payloadResponse));
     }
     let order_id = 0;
+    // second after inserting to orders, get count of orders table to find the latest order id
     db.all('SELECT * from orders', function(err, rows) {
       if (err){
         response.status(500).send(JSON.stringify(payloadResponse));
       }
       order_id = rows.length;
+      // third insert into order_items table, order id and item id
       db.all(`INSERT INTO order_items (order_id, item_id) VALUES (${order_id}, ${request.query.itemId})`, function(err, rows) {
         if (err){
           response.status(500).send(JSON.stringify(payloadResponse));
