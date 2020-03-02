@@ -1,5 +1,15 @@
-import { createAction } from 'redux-api-middleware';
+import { RSAA, createAction } from 'redux-api-middleware';
 import { localHost } from '../constants';
+
+export const retrieveOrders = () => {
+  return {
+    [RSAA]: {
+      endpoint: `${localHost}/orders`,
+      method: 'GET',
+      types: [`REQUEST_ORDERS`, `SUCCESS_ORDERS`, `FAILURE_ORDERS`]
+    }
+  }
+}
 
 export const uploadOrder = (itemId, userId) => {
   return createAction({
@@ -11,3 +21,4 @@ export const uploadOrder = (itemId, userId) => {
     types: [`REQUEST_POST_ORDER`, `SUCCESS_POST_ORDER`, `FAILURE_POST_ORDER`]
   });
 }
+

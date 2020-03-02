@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { MDBBtn, MDBCard, MDBCardBody, MDBCardText, MDBCol } from 'mdbreact';
+import { MDBTable, MDBTableBody, MDBTableHead, MDBBtn, MDBCard, MDBCardBody, MDBCardText, MDBCol  } from 'mdbreact';
 
-import { uploadOrder } from './../../actions/orderActions';
+import { retrieveOrders, uploadOrder } from './../../actions/orderActions';
 import styles from './Orders.module.css';
 
 // component contains the ability to view, upload and delete Walmart InHome orders
@@ -17,6 +17,23 @@ class OrdersComponent extends Component {
     }
   }
 
+  clearUploadMessage() {
+    this.setState({ uploadMessageText: '' });
+  }
+
+  componentDidUpdate(prevProps) {
+    // if we recieve a different upload message from the server make sure to retrieve latest list of orders
+    if (this.props.uploadMessage !== prevProps.uploadMessage) {
+      this.props.actions.retrieveOrders();
+      this.setState({ uploadMessageText: this.props.uploadMessage });
+      setTimeout(() => { this.clearUploadMessage() }, 5000);
+    }
+  }
+
+  componentWillMount(){
+    this.props.actions.retrieveOrders();
+  }
+
   createDropDownOptions = options => {
     const optionsList = [];
     options.map(option => {
@@ -25,13 +42,38 @@ class OrdersComponent extends Component {
     return optionsList;
   }
 
-  // function that creates the html template for the upload item card
+
+  createOrdersTable = () => {
+    const { orders } = this.props;
+    const ordersList = [];
+    orders.map(order => {
+      ordersList.push(<tr key={`${order.id}`}>
+        <td className={styles.orderTableRow}>{order.user_name}</td>
+        <td className={styles.orderTableRow}>{order.item_name}</td>
+      </tr>);
+    });
+    return (
+      <MDBTable>
+        <MDBTableHead>
+          <tr>
+            <th className={styles.orderTableHeader}>User</th>
+            <th className={styles.orderTableHeader}>Item</th>
+          </tr>
+        </MDBTableHead>
+        <MDBTableBody>
+          {ordersList}
+        </MDBTableBody>
+      </MDBTable>
+    );
+  }
+
+  // function that creates the html template for the uploading an order
   createUploadCard = () => {
     return (
       <MDBCol>
         <MDBCard style={{ width: "22rem" }}>
           <MDBCardBody>
-            <MDBCardText>Upload or delete an item</MDBCardText>
+            <MDBCardText>Upload a new order</MDBCardText>
             <div className={styles.orderSelectDropDown}>
               <select className="browser-default custom-select" onChange={this.updateSelectedUser}>
                 <option>Choose your user</option>
@@ -70,7 +112,8 @@ class OrdersComponent extends Component {
     return (
       <div>
         <div className={styles.row}>
-          {this.createUploadCard()}
+          <div className={styles.cardContainer}>{this.createUploadCard()}</div>
+          {this.createOrdersTable()}
         </div>
       </div>
     );
@@ -78,13 +121,16 @@ class OrdersComponent extends Component {
 };
 
 const mapStateToProps = state => ({
-  users: state.userReducers.users,
-  items: state.itemReducers.items
+  items: state.itemReducers.items,
+  orders: state.orderReducers.orders,
+  uploadMessage: state.orderReducers.uploadMessage,
+  users: state.userReducers.users
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     actions: {
+      retrieveOrders: bindActionCreators(retrieveOrders, dispatch),
       uploadOrder: bindActionCreators(uploadOrder, dispatch)
     }
   }

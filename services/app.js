@@ -180,22 +180,26 @@ app.get('/orderitemstbl', function(request, response) {
 });
 
 app.post('/upload-order', function(request, response) {
+  const payloadResponse = {
+    message: ''
+  };
   db.all(`INSERT INTO orders (user_id) VALUES (${request.query.userId})`, function(err, rows) {
     response.setHeader('Content-Type', 'application/json');
     if (err){
-      response.status(500).send();
+      response.status(500).send(JSON.stringify(payloadResponse));
     }
     let order_id = 0;
     db.all('SELECT * from orders', function(err, rows) {
       if (err){
-        response.status(500).send();
+        response.status(500).send(JSON.stringify(payloadResponse));
       }
       order_id = rows.length;
       db.all(`INSERT INTO order_items (order_id, item_id) VALUES (${order_id}, ${request.query.itemId})`, function(err, rows) {
         if (err){
-          response.status(500).send();
+          response.status(500).send(JSON.stringify(payloadResponse));
         }
-        response.status(200).send();
+        payloadResponse.message = 'successfully uploaded order!';
+        response.status(200).send(JSON.stringify(payloadResponse));
       });
     });
   });
