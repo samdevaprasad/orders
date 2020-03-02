@@ -12,7 +12,7 @@ cd ui
 npm i
 npm start
 
-The UI should be viewable at http://localhost:3000/  
+The UI should be viewable at http://localhost:3000/  (In case you are not able to bring up demo, I also have a video demo uploaded to this repo for your viewing)
 
 
 
